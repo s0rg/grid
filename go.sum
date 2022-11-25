@@ -1,0 +1,8 @@
+github.com/s0rg/array2d v1.0.0 h1:RqlhvPCq035CCEUDsm5nv/6NH6J0vRuU48gNG+6za2Q=
+github.com/s0rg/array2d v1.0.0/go.mod h1:WY9vy75JDWyNnE2Qo3Gn8lMqiJYlgWCvK1Zauv7QiuU=
+github.com/s0rg/set v1.0.0 h1:/MAmKEQ3Ltodli7/+e8iSTKNwhzmvxkmSDZO8BMTFbE=
+github.com/s0rg/set v1.0.0/go.mod h1:n2TtovR+7TrBIztw+6muV9ZLRuDIimsd8YyTN+QBmHQ=
+github.com/s0rg/vec2d v1.0.2 h1:HgjUL3VzZE5cizn6+MW9Snw7maxAGFO8nIFGuNRf11g=
+github.com/s0rg/vec2d v1.0.2/go.mod h1:qnuPg+psBJLq7ICMqF2YJ6WW5L9sbY6Zy9xrEPNA/Hw=
+golang.org/x/exp v0.0.0-20221114191408-850992195362 h1:NoHlPRbyl1VFI6FjwHtPQCN7wAMXI6cKcqrmXhOOfBQ=
+golang.org/x/exp v0.0.0-20221114191408-850992195362/go.mod h1:CxIveKay+FTh1D0yPZemJVgC/95VzuuOLq5Qi4xnoYc=
