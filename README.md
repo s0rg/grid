@@ -5,10 +5,8 @@
 
 [![CI](https://github.com/s0rg/grid/workflows/ci/badge.svg)](https://github.com/s0rg/grid/actions?query=workflow%3Aci)
 [![Go Report Card](https://goreportcard.com/badge/github.com/s0rg/grid)](https://goreportcard.com/report/github.com/s0rg/grid)
-<!--
-[![Maintainability](https://api.codeclimate.com/v1/badges/54e42106bc739ae75de9/maintainability)](https://codeclimate.com/github/s0rg/grid/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/54e42106bc739ae75de9/test_coverage)](https://codeclimate.com/github/s0rg/grid/test_coverage)
--->
+[![Maintainability](https://api.codeclimate.com/v1/badges/8478f67a6b72d9e67cab/maintainability)](https://codeclimate.com/github/s0rg/grid/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/8478f67a6b72d9e67cab/test_coverage)](https://codeclimate.com/github/s0rg/grid/test_coverage)
 ![Issues](https://img.shields.io/github/issues/s0rg/grid)
 
 # grid
@@ -17,9 +15,15 @@ Generic 2D grid
 
 # features
 
-- A-Star pathfinding
 - DDA RayCasting
+- A-Star pathfinding
 - Ray-based line of sight
 - Recursive ShadowCasting
 - Dijkstra maps
 - 100% test cover
+
+# example
+
+[Here](https://github.com/s0rg/grid/blob/master/_example/main.go) is a full example.
+
+You can run it with `go run _example/main.go` to see results.
