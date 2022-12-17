@@ -33,9 +33,7 @@ import (
 
 const mapW, mapH = 100, 100
 
-// grid can work with any types, values or pointers
-
-func simpleNonPointerGrigExample() {
+func valueExample() {
     // working with value-types is straightforward
     g := grid.New[int](image.Rect(0, 0, mapW, mapH))
 
@@ -44,11 +42,9 @@ func simpleNonPointerGrigExample() {
     g.Fill(func() int {
         return 1
     })
-
-    // use grid here
 }
 
-func simplePointerGrigExample() {
+func pointerExample() {
     // working with pointer-types is same, but you now you must to pre-fill them
     type mycell struct {}
 
@@ -59,11 +55,9 @@ func simplePointerGrigExample() {
     g.Fill(func() *mycell {
         return &mycell{}
     })
-
-    // use grid here
 }
 
-func baicApiExample() {
+func usageExample() {
     type mycell struct {
         wall bool
     }
