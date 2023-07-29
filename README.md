@@ -20,6 +20,7 @@ Generic 2D grid
 - [Ray-based line of sight](https://en.wikipedia.org/wiki/Line_of_sight_(video_games))
 - [Recursive ShadowCasting](http://www.roguebasin.com/index.php/Shadow_casting)
 - [Dijkstra maps](http://www.roguebasin.com/index.php/Dijkstra_Maps_Visualized)
+- [Bresenham's lines](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm)
 - 100% test cover
 
 # usage

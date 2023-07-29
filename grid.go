@@ -80,7 +80,7 @@ func (m *Map[T]) Fill(filler func() T) {
 func (m *Map[T]) Neighbours(
 	src image.Point,
 	dirs []image.Point,
-	walk Iter[T],
+	iter Iter[T],
 ) {
 	var (
 		cur image.Point
@@ -95,7 +95,7 @@ func (m *Map[T]) Neighbours(
 			continue
 		}
 
-		if !walk(cur, val) {
+		if !iter(cur, val) {
 			break
 		}
 	}
@@ -109,19 +109,19 @@ func (m *Map[T]) Path(
 	cost Cost[T],
 ) (rv []image.Point, ok bool) {
 	if !src.In(m.rc) {
-		return
+		return rv, false
 	}
 
 	var val T
 
 	if val, ok = m.cells.Get(dst.X, dst.Y); !ok {
-		return
+		return rv, false
 	}
 
 	tdist := dist(dst, src)
 
 	if _, ok = cost(dst, tdist, val); !ok {
-		return
+		return rv, false
 	}
 
 	var (
@@ -164,7 +164,7 @@ func (m *Map[T]) Path(
 func (m *Map[T]) LineOfSight(
 	src image.Point,
 	distMax float64,
-	view Cast[T],
+	cast Cast[T],
 ) {
 	if !src.In(m.rc) {
 		return
@@ -173,7 +173,7 @@ func (m *Map[T]) LineOfSight(
 	const maxDegrees = 360.0
 
 	for t := float64(0); t < maxDegrees; t++ {
-		m.CastRay(src, t, distMax, view)
+		m.CastRay(src, t, distMax, cast)
 	}
 }
 
@@ -250,7 +250,7 @@ func (m *Map[T]) CastRay(
 func (m *Map[T]) CastShadow(
 	src image.Point,
 	distMax float64,
-	view Cast[T],
+	cast Cast[T],
 ) {
 	const (
 		octetMin = 1
@@ -262,10 +262,85 @@ func (m *Map[T]) CastShadow(
 		return
 	}
 
-	view(src, 0, val)
+	cast(src, 0, val)
 
 	for oct := octetMin; oct <= octetMax; oct++ {
-		m.emitShadow(src, oct, one, distMax, 0.0, one, view)
+		m.emitShadow(src, oct, one, distMax, 0.0, one, cast)
+	}
+}
+
+// DijkstraMap calculates 'Dijkstra' map for given points.
+func (m *Map[T]) DijkstraMap(
+	targets []image.Point,
+	iter Iter[T],
+) (rv *DijkstraMap) {
+	rv = &DijkstraMap{
+		ranks: array2d.New[uint16](m.cells.Bounds()),
+	}
+
+	rv.update(targets, func(p image.Point) (ok bool) {
+		val, _ := m.cells.Get(p.X, p.Y)
+
+		return iter(p, val)
+	})
+
+	return rv
+}
+
+// Line by Bresenham's algorithm.
+func (m *Map[T]) LineBresenham(
+	src, dst image.Point,
+	iter Iter[T],
+) {
+	if !src.In(m.rc) {
+		return
+	}
+
+	const two = 2
+
+	var (
+		sx, sy = 1, 1
+		dx, dy = abs(dst.X - src.X), -abs(dst.Y - src.Y)
+		e1     = dx + dy
+		e2     int
+		val    T
+		ok     bool
+	)
+
+	if src.X > dst.X {
+		sx = -1
+	}
+
+	if src.Y > dst.Y {
+		sy = -1
+	}
+
+	cur := src
+
+	for {
+		if val, ok = m.cells.Get(cur.X, cur.Y); !ok {
+			break
+		}
+
+		if !iter(cur, val) {
+			break
+		}
+
+		if cur.Eq(dst) {
+			break
+		}
+
+		e2 = e1 * two
+
+		if e2 >= dy {
+			cur.X += sx
+			e1 += dy
+		}
+
+		if e2 <= dx {
+			cur.Y += sy
+			e1 += dx
+		}
 	}
 }
 
@@ -273,7 +348,7 @@ func (m *Map[T]) emitShadow(
 	src image.Point,
 	oct int,
 	dist, distMax, slopeLow, slopeHigh float64,
-	view Cast[T],
+	cast Cast[T],
 ) {
 	if dist > distMax {
 		return
@@ -302,35 +377,17 @@ func (m *Map[T]) emitShadow(
 		}
 
 		switch {
-		case view(pt, pdist, val):
+		case cast(pt, pdist, val):
 			gap = true
 		case gap:
-			m.emitShadow(src, oct, dist+1, distMax, slopeLow, (h-half)/dist, view)
+			m.emitShadow(src, oct, dist+1, distMax, slopeLow, (h-half)/dist, cast)
 
 			slopeLow = (h + half) / dist
 			gap = false
 		}
 	}
 
-	m.emitShadow(src, oct, dist+1, distMax, slopeLow, slopeHigh, view)
-}
-
-// DijkstraMap calculates 'Dijkstra' map for given points.
-func (m *Map[T]) DijkstraMap(
-	targets []image.Point,
-	walk Iter[T],
-) (rv *DijkstraMap) {
-	rv = &DijkstraMap{
-		ranks: array2d.New[uint16](m.cells.Bounds()),
-	}
-
-	rv.update(targets, func(p image.Point) (ok bool) {
-		val, _ := m.cells.Get(p.X, p.Y)
-
-		return walk(p, val)
-	})
-
-	return rv
+	m.emitShadow(src, oct, dist+1, distMax, slopeLow, slopeHigh, cast)
 }
 
 func radians(v float64) (d float64) {
@@ -355,4 +412,12 @@ func octantPoint(p image.Point, oct, d, h int) (rv image.Point) {
 	}
 
 	return p.Add(rv)
+}
+
+func abs(v int) int {
+	if v < 0 {
+		return -v
+	}
+
+	return v
 }

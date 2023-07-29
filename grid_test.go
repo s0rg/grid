@@ -533,3 +533,92 @@ func TestMapDijkstraEmpty(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestLineBresenham(t *testing.T) {
+	t.Parallel()
+
+	const W, H = 5, 5
+
+	var cases = []struct {
+		Path []image.Point
+		Src  image.Point
+		Dst  image.Point
+	}{
+		{
+			Src: image.Pt(1, 1),
+			Dst: image.Pt(6, 6),
+			Path: []image.Point{
+				image.Pt(1, 1),
+				image.Pt(2, 2),
+				image.Pt(3, 3),
+				image.Pt(4, 4),
+			},
+		},
+		{
+			Src: image.Pt(1, 4),
+			Dst: image.Pt(1, 1),
+			Path: []image.Point{
+				image.Pt(1, 1),
+				image.Pt(1, 2),
+				image.Pt(1, 3),
+				image.Pt(1, 4),
+			},
+		},
+		{
+			Src: image.Pt(4, 1),
+			Dst: image.Pt(1, 1),
+			Path: []image.Point{
+				image.Pt(1, 1),
+				image.Pt(2, 1),
+				image.Pt(3, 1),
+				image.Pt(4, 1),
+			},
+		},
+		{
+			Src: image.Pt(-1, -1),
+		},
+	}
+
+	m := New[struct{}](image.Rect(0, 0, W, H))
+
+	for i, c := range cases {
+		seen := make(set.Set[image.Point])
+
+		m.LineBresenham(c.Src, c.Dst, func(p image.Point, _ struct{}) (ok bool) {
+			seen.Add(p)
+
+			return true
+		})
+
+		if len(seen) != len(c.Path) {
+			t.Fatalf("case %d failed", i)
+		}
+
+		if len(c.Path) == 0 {
+			continue
+		}
+
+		for _, p := range c.Path {
+			if !seen.Has(p) {
+				t.Fatalf("not seen: %v", p)
+			}
+		}
+	}
+}
+
+func TestLineBresenhamBreak(t *testing.T) {
+	t.Parallel()
+
+	const W, H = 5, 5
+
+	m := New[struct{}](image.Rect(0, 0, W, H))
+	x := image.Pt(2, 2)
+
+	m.LineBresenham(image.Pt(1, 1), image.Pt(3, 3), func(p image.Point, _ struct{}) (ok bool) {
+		if p.Eq(x) {
+			t.Fail()
+		}
+
+		return false
+	})
+}
