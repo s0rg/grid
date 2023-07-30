@@ -17,6 +17,17 @@ func TestMapBounds(t *testing.T) {
 	}
 }
 
+func TestMapRectangle(t *testing.T) {
+	t.Parallel()
+
+	r := image.Rect(0, 0, 20, 10)
+	m := New[struct{}](r)
+
+	if rc := m.Rectangle(); !rc.Eq(r) {
+		t.Fail()
+	}
+}
+
 func TestMapGetSet(t *testing.T) {
 	t.Parallel()
 

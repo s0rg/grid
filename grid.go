@@ -43,6 +43,11 @@ func (m *Map[T]) Bounds() (w, h int) {
 	return m.cells.Bounds()
 }
 
+// Rectangle returns grid bounding rectangle.
+func (m *Map[T]) Rectangle() image.Rectangle {
+	return m.rc
+}
+
 // Get returns value (if any) at given point.
 func (m *Map[T]) Get(p image.Point) (c T, ok bool) {
 	return m.cells.Get(p.X, p.Y)
