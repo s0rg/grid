@@ -98,3 +98,28 @@ func usageExample() {
 [Here](https://github.com/s0rg/grid/blob/master/_example/main.go) is a full example.
 
 You can run it with `go run _example/main.go` to see results.
+
+# benchmarks
+
+run:
+
+```bash
+make bench
+```
+
+results:
+
+```
+goos: linux
+goarch: amd64
+pkg: github.com/s0rg/grid
+cpu: AMD Ryzen 5 5500U with Radeon Graphics
+BenchmarkGet-12              	38827509	       26.19 ns/op	      0 B/op	      0 allocs/op
+BenchmarkSet-12              	45670502	       25.88 ns/op	      0 B/op	      0 allocs/op
+BenchmarkLineBresenham-12    	4553430	      259.0 ns/op	      0 B/op	      0 allocs/op
+BenchmarkRayCast-12          	2803326	      426.8 ns/op	      0 B/op	      0 allocs/op
+BenchmarkCastShadow-12       	  44913	    26419 ns/op	      0 B/op	      0 allocs/op
+BenchmarkLineOfSight-12      	  14817	    81224 ns/op	      0 B/op	      0 allocs/op
+BenchmarkDijkstraMap-12      	   1083	  1079093 ns/op	  20656 B/op	      3 allocs/op
+BenchmarkPath-12             	    129	  8987962 ns/op	10448661 B/op	  37737 allocs/op
+```
