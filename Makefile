@@ -14,5 +14,9 @@ test: vet
 test-cover: test
 	@- go tool cover -func="$(COP)"
 
+
+bench:
+	@- go test -count 1 -bench=. -benchmem -timeout 15m
+
 clean:
 	@- rm -f "$(COP)"

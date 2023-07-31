@@ -7,21 +7,23 @@ type path struct {
 	Cost   float64
 }
 
-func (p path) Len() (rv int) {
+func (p *path) Len() (rv int) {
 	return len(p.Points)
 }
 
-func (p path) Last() (v image.Point) {
+func (p *path) Last() (v image.Point) {
 	return p.Points[p.Len()-1]
 }
 
-func (p path) Fork(pt image.Point, dist float64) (rv path) {
+func (p *path) Fork(pt image.Point, dist float64) (rv path) {
 	l := p.Len()
-	points := make([]image.Point, l, l+1)
-	copy(points, p.Points)
+	add := make([]image.Point, l+1)
+	copy(add, p.Points)
 
-	rv.Points = append(points, pt)
-	rv.Cost = p.Cost + dist
+	add[l] = pt
 
-	return rv
+	return path{
+		Points: add,
+		Cost:   p.Cost + dist,
+	}
 }
