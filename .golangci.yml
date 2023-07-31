@@ -42,6 +42,8 @@ issues:
       linters:
         - funlen
         - cyclop
+        - gosec
+        - unparam
     - path: path.go
       text: "appendAssign"
       linters:

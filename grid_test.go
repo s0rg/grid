@@ -668,7 +668,7 @@ func BenchmarkSet(b *testing.B) {
 	}
 }
 
-func benchmarkNeighbours(b *testing.B) {
+func BenchmarkNeighbours(b *testing.B) {
 	rand.Seed(benchmarkSeed)
 
 	m := New[struct{}](image.Rect(0, 0, benchmarkSide, benchmarkSide))

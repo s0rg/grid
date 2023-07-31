@@ -114,12 +114,15 @@ goos: linux
 goarch: amd64
 pkg: github.com/s0rg/grid
 cpu: AMD Ryzen 5 5500U with Radeon Graphics
-BenchmarkGet-12              	38827509	       26.19 ns/op	      0 B/op	      0 allocs/op
-BenchmarkSet-12              	45670502	       25.88 ns/op	      0 B/op	      0 allocs/op
-BenchmarkLineBresenham-12    	4553430	      259.0 ns/op	      0 B/op	      0 allocs/op
-BenchmarkRayCast-12          	2803326	      426.8 ns/op	      0 B/op	      0 allocs/op
-BenchmarkCastShadow-12       	  44913	    26419 ns/op	      0 B/op	      0 allocs/op
-BenchmarkLineOfSight-12      	  14817	    81224 ns/op	      0 B/op	      0 allocs/op
-BenchmarkDijkstraMap-12      	   1083	  1079093 ns/op	  20656 B/op	      3 allocs/op
-BenchmarkPath-12             	    129	  8987962 ns/op	10448661 B/op	  37737 allocs/op
+BenchmarkGet-12              	45999506	       26.23 ns/op	      0 B/op	      0 allocs/op
+BenchmarkSet-12              	40784006	       25.91 ns/op	      0 B/op	      0 allocs/op
+BenchmarkNeighbours-12       	21348812	       49.75 ns/op	      0 B/op	      0 allocs/op
+BenchmarkLineBresenham-12    	4515738	      259.9 ns/op	      0 B/op	      0 allocs/op
+BenchmarkRayCast-12          	2857318	      415.0 ns/op	      0 B/op	      0 allocs/op
+BenchmarkCastShadow-12       	  44434	    26627 ns/op	      0 B/op	      0 allocs/op
+BenchmarkLineOfSight-12      	  14748	    81038 ns/op	      0 B/op	      0 allocs/op
+BenchmarkDijkstraMap-12      	    739	  1641456 ns/op	  20656 B/op	      3 allocs/op
+BenchmarkPath-12             	    122	  8679218 ns/op	10457551 B/op	  36911 allocs/op
+PASS
+ok  	github.com/s0rg/grid	13.269s
 ```
