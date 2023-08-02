@@ -2,9 +2,7 @@ package grid
 
 import (
 	"image"
-	"math/rand"
 	"testing"
-	"time"
 
 	"github.com/s0rg/set"
 )
@@ -636,199 +634,98 @@ func TestLineBresenhamBreak(t *testing.T) {
 	})
 }
 
-// benchmarks
-
-const benchmarkSide = 100
-
-var benchmarkSeed = time.Now().UnixNano()
-
-func BenchmarkGet(b *testing.B) {
-	rand.Seed(benchmarkSeed)
-
-	m := New[struct{}](image.Rect(0, 0, benchmarkSide, benchmarkSide))
-
-	b.ResetTimer()
-
-	for n := 0; n < b.N; n++ {
-		p := randPoint(benchmarkSide)
-		_, _ = m.Get(p)
-	}
-}
-
-func BenchmarkSet(b *testing.B) {
-	rand.Seed(benchmarkSeed)
-
-	m := New[struct{}](image.Rect(0, 0, benchmarkSide, benchmarkSide))
-
-	b.ResetTimer()
-
-	for n := 0; n < b.N; n++ {
-		p := randPoint(benchmarkSide)
-		_ = m.Set(p, struct{}{})
-	}
-}
-
-func BenchmarkNeighbours(b *testing.B) {
-	rand.Seed(benchmarkSeed)
-
-	m := New[struct{}](image.Rect(0, 0, benchmarkSide, benchmarkSide))
-	d := Points(DirectionsALL...)
-	f := func(_ image.Point, _ struct{}) bool {
-		return true
-	}
-
-	b.ResetTimer()
-
-	for n := 0; n < b.N; n++ {
-		p := randPoint(benchmarkSide)
-		m.Neighbours(p, d, f)
-	}
-}
-
-func BenchmarkLineBresenham(b *testing.B) {
-	rand.Seed(benchmarkSeed)
-
-	m := New[struct{}](image.Rect(0, 0, benchmarkSide, benchmarkSide))
-	f := func(_ image.Point, _ struct{}) (next bool) {
-		return true
-	}
-
-	b.ResetTimer()
-
-	for n := 0; n < b.N; n++ {
-		a, b := randPoint(benchmarkSide), randPoint(benchmarkSide)
-		m.LineBresenham(a, b, f)
-	}
-}
-
-func BenchmarkRayCast(b *testing.B) {
-	rand.Seed(benchmarkSeed)
-
-	m := New[struct{}](image.Rect(0, 0, benchmarkSide, benchmarkSide))
-	f := func(_ image.Point, _ float64, _ struct{}) (next bool) {
-		return true
-	}
-
+func BenchmarkGrid(b *testing.B) {
 	const (
-		angleMin = 0.0
-		angleMax = 360.0
-		distMin  = float64(benchmarkSide / 2)
-		distMax  = float64(benchmarkSide)
+		benchmarkSide = 100
+		benchmarkDist = float64(benchmarkSide / 3)
 	)
-
-	b.ResetTimer()
-
-	for n := 0; n < b.N; n++ {
-		m.CastRay(
-			randPoint(benchmarkSide),
-			randFloat(angleMin, angleMax),
-			randFloat(distMin, distMax),
-			f,
-		)
-	}
-}
-
-func BenchmarkCastShadow(b *testing.B) {
-	rand.Seed(benchmarkSeed)
 
 	m := New[struct{}](image.Rect(0, 0, benchmarkSide, benchmarkSide))
-	f := func(_ image.Point, _ float64, _ struct{}) (next bool) {
-		return true
-	}
+	o := image.Pt(1, 1)
+	x := image.Pt(benchmarkSide/2, benchmarkSide/2)
+	p := image.Pt(benchmarkSide-1, benchmarkSide-1)
+	dirAll := Points(DirectionsALL...)
+	dirCross := Points(DirectionsCardinal...)
 
-	const (
-		distMin = float64(benchmarkSide / 10)
-		distMax = float64(benchmarkSide / 2)
-	)
-
-	b.ResetTimer()
-
-	for n := 0; n < b.N; n++ {
-		m.CastShadow(
-			randPoint(benchmarkSide),
-			randFloat(distMin, distMax),
-			f,
-		)
-	}
-}
-
-func BenchmarkLineOfSight(b *testing.B) {
-	rand.Seed(benchmarkSeed)
-
-	m := New[struct{}](image.Rect(0, 0, benchmarkSide, benchmarkSide))
-	f := func(_ image.Point, _ float64, _ struct{}) (next bool) {
-		return true
-	}
-
-	const (
-		distMin = float64(benchmarkSide / 10)
-		distMax = float64(benchmarkSide / 2)
-	)
-
-	b.ResetTimer()
-
-	for n := 0; n < b.N; n++ {
-		m.LineOfSight(
-			randPoint(benchmarkSide),
-			randFloat(distMin, distMax),
-			f,
-		)
-	}
-}
-
-func BenchmarkDijkstraMap(b *testing.B) {
-	rand.Seed(benchmarkSeed)
-
-	m := New[struct{}](image.Rect(0, 0, benchmarkSide, benchmarkSide))
-	f := func(_ image.Point, _ struct{}) (next bool) {
-		return true
-	}
-
-	const (
-		pointsMax = 5
-	)
-
-	points := make([]image.Point, pointsMax)
-
-	for i := 0; i < pointsMax; i++ {
-		points[i] = randPoint(benchmarkSide)
+	var dijkstraPoints = []image.Point{
+		o,
+		x,
+		p,
 	}
 
 	b.ResetTimer()
 
-	for n := 0; n < b.N; n++ {
-		m.DijkstraMap(points, f)
-	}
-}
+	b.Run("Set", func(b *testing.B) {
+		for n := 0; n < b.N; n++ {
+			_ = m.Set(p, struct{}{})
+		}
+	})
 
-func BenchmarkPath(b *testing.B) {
-	rand.Seed(benchmarkSeed)
+	b.Run("Get", func(b *testing.B) {
+		for n := 0; n < b.N; n++ {
+			_, _ = m.Get(p)
+		}
+	})
 
-	m := New[struct{}](image.Rect(0, 0, benchmarkSide, benchmarkSide))
-	d := Points(DirectionsCardinal...)
-	f := func(_ image.Point, dist float64, _ struct{}) (cost float64, walkable bool) {
-		return dist, true
-	}
+	b.Run("Neighbours", func(b *testing.B) {
+		for n := 0; n < b.N; n++ {
+			m.Neighbours(p, dirAll, func(_ image.Point, _ struct{}) bool {
+				return true
+			})
+		}
+	})
 
-	b.ResetTimer()
+	b.Run("LineBresenham", func(b *testing.B) {
+		for n := 0; n < b.N; n++ {
+			m.LineBresenham(p, x, func(_ image.Point, _ struct{}) bool {
+				return true
+			})
+		}
+	})
 
-	for n := 0; n < b.N; n++ {
-		a, b := randPoint(benchmarkSide), randPoint(benchmarkSide)
-		m.Path(a, b, d, DistanceManhattan, f)
-	}
-}
+	b.Run("CastRay", func(b *testing.B) {
+		for n := 0; n < b.N; n++ {
+			m.CastRay(x, 230.0, benchmarkDist, func(_ image.Point, _ float64, _ struct{}) bool {
+				return true
+			})
+		}
+	})
 
-func randPoint(a int) image.Point {
-	return image.Pt(
-		randInt(1, a),
-		randInt(1, a),
-	)
-}
+	b.Run("CastShadow", func(b *testing.B) {
+		for n := 0; n < b.N; n++ {
+			m.CastShadow(x, benchmarkDist, func(_ image.Point, _ float64, _ struct{}) bool {
+				return true
+			})
+		}
+	})
 
-func randInt(a, b int) (rv int) {
-	return a + rand.Intn(b-a)
-}
+	b.Run("LineOfSight", func(b *testing.B) {
+		for n := 0; n < b.N; n++ {
+			m.LineOfSight(x, benchmarkDist, func(_ image.Point, _ float64, _ struct{}) bool {
+				return true
+			})
+		}
+	})
 
-func randFloat(min, max float64) (rv float64) {
-	return min + (rand.Float64() * (max - min))
+	b.Run("DijkstraMap", func(b *testing.B) {
+		for n := 0; n < b.N; n++ {
+			m.DijkstraMap(dijkstraPoints, func(_ image.Point, _ struct{}) bool {
+				return true
+			})
+		}
+	})
+
+	b.Run("Path", func(b *testing.B) {
+		for n := 0; n < b.N; n++ {
+			m.Path(
+				p,
+				x,
+				dirCross,
+				DistanceManhattan,
+				func(_ image.Point, dist float64, _ struct{}) (cost float64, walkable bool) {
+					return dist, true
+				},
+			)
+		}
+	})
 }
