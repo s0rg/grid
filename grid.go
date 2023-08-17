@@ -1,13 +1,13 @@
 package grid
 
 import (
-	"container/heap"
 	"image"
 	"math"
 
 	"github.com/s0rg/array2d"
 	"github.com/s0rg/set"
 	"github.com/s0rg/vec2d"
+	"github.com/zyedidia/generic/heap"
 )
 
 const one = 1.0
@@ -131,16 +131,18 @@ func (m *Map[T]) Path(
 
 	var (
 		road   path
-		queue  pqueue
 		last   image.Point
 		closed = make(set.Set[image.Point])
 	)
 
-	heap.Init(&queue)
-	heap.Push(&queue, road.Fork(src, tdist))
+	queue := heap.New[path](func(a, b path) bool {
+		return a.Cost < b.Cost
+	})
 
-	for queue.Len() > 0 {
-		road = heap.Pop(&queue).(path)
+	queue.Push(road.Fork(src, tdist))
+
+	for queue.Size() > 0 {
+		road, _ = queue.Pop()
 		last = road.Last()
 
 		if !closed.TryAdd(last) {
@@ -155,7 +157,7 @@ func (m *Map[T]) Path(
 			var ncost float64
 
 			if ncost, ok = cost(p, dist(dst, p), t); ok {
-				heap.Push(&queue, road.Fork(p, ncost))
+				queue.Push(road.Fork(p, ncost))
 			}
 
 			return true
