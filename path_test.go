@@ -11,7 +11,7 @@ func TestPath(t *testing.T) {
 	const N = 10
 
 	var (
-		p path
+		p *path
 		o image.Point
 	)
 

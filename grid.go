@@ -130,12 +130,12 @@ func (m *Map[T]) Path(
 	}
 
 	var (
-		road   path
+		road   *path
 		last   image.Point
 		closed = make(set.Set[image.Point])
 	)
 
-	queue := heap.New[path](func(a, b path) bool {
+	queue := heap.New[*path](func(a, b *path) bool {
 		return a.Cost < b.Cost
 	})
 
@@ -150,7 +150,7 @@ func (m *Map[T]) Path(
 		}
 
 		if last.Eq(dst) {
-			return road.Points, true
+			return road.Points(), true
 		}
 
 		m.Neighbours(last, dirs, func(p image.Point, t T) (ok bool) {

@@ -114,13 +114,15 @@ goos: linux
 goarch: amd64
 pkg: github.com/s0rg/grid
 cpu: AMD Ryzen 5 5500U with Radeon Graphics
-BenchmarkGrid/Set-12                 1000000000      0.8379 ns/op       0 B/op         0 allocs/op
-BenchmarkGrid/Get-12                  781486358       1.521 ns/op       0 B/op         0 allocs/op
-BenchmarkGrid/Neighbours-12            61203862       19.25 ns/op       0 B/op         0 allocs/op
-BenchmarkGrid/LineBresenham-12          5331663       223.9 ns/op       0 B/op         0 allocs/op
-BenchmarkGrid/CastRay-12                4160371       287.7 ns/op       0 B/op         0 allocs/op
-BenchmarkGrid/CastShadow-12               33894     34771 ns/op         0 B/op         0 allocs/op
-BenchmarkGrid/LineOfSight-12              11482    104325 ns/op         0 B/op         0 allocs/op
-BenchmarkGrid/DijkstraMap-12               1011   1105615 ns/op     20656 B/op         3 allocs/op
-BenchmarkGrid/Path-12                       166   7458693 ns/op  13347421 B/op     13643 allocs/op
+BenchmarkGrid/Set-12         	1000000000	        0.8108 ns/op	      0 B/op	      0 allocs/op
+BenchmarkGrid/Get-12         	641611768	        1.764 ns/op	      0 B/op	      0 allocs/op
+BenchmarkGrid/Neighbours-12  	52243890	       23.41 ns/op	      0 B/op	      0 allocs/op
+BenchmarkGrid/LineBresenham-12         	4416172	      269.0 ns/op	      0 B/op	      0 allocs/op
+BenchmarkGrid/CastRay-12               	3829839	      321.1 ns/op	      0 B/op	      0 allocs/op
+BenchmarkGrid/CastShadow-12            	  32648	    36950 ns/op	      0 B/op	      0 allocs/op
+BenchmarkGrid/LineOfSight-12           	   9897	   114576 ns/op	      0 B/op	      0 allocs/op
+BenchmarkGrid/DijkstraMap-12           	   1029	  1190195 ns/op	  20656 B/op	      3 allocs/op
+BenchmarkGrid/Path-12                  	    372	  3225325 ns/op	 997588 B/op	  13643 allocs/op
+PASS
+ok  	github.com/s0rg/grid	12.098s
 ```
