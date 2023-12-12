@@ -258,11 +258,11 @@ func TestMapPath(t *testing.T) {
 		coster,
 	)
 	if !ok {
-		t.Fail()
+		t.Fatal("step 1")
 	}
 
 	if len(p) != 4 {
-		t.Fail()
+		t.Fatal("step 1 - 2")
 	}
 
 	// step 2: first wall
@@ -276,11 +276,11 @@ func TestMapPath(t *testing.T) {
 		coster,
 	)
 	if !ok {
-		t.Fail()
+		t.Fatal("step 2")
 	}
 
 	if len(p) != 4 {
-		t.Fail()
+		t.Fatal("step 2 - 2")
 	}
 
 	// step 3: second wall
@@ -294,11 +294,11 @@ func TestMapPath(t *testing.T) {
 		coster,
 	)
 	if !ok {
-		t.Fail()
+		t.Fatal("step 3")
 	}
 
 	if len(p) != 6 {
-		t.Fail()
+		t.Fatal("step 3 - 2")
 	}
 
 	// step 4: the last diagonal wall
@@ -312,7 +312,7 @@ func TestMapPath(t *testing.T) {
 		coster,
 	)
 	if ok {
-		t.Fail()
+		t.Fatal("step 4")
 	}
 
 	// OOB cases
