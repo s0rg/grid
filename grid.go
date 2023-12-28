@@ -132,7 +132,7 @@ func (m *Map[T]) Path(
 	var (
 		road   *path
 		last   image.Point
-		closed = make(set.Set[image.Point])
+		closed = make(set.Unordered[image.Point])
 	)
 
 	queue := heap.New[*path](func(a, b *path) bool {
@@ -145,7 +145,7 @@ func (m *Map[T]) Path(
 		road, _ = queue.Pop()
 		last = road.Last()
 
-		if !closed.TryAdd(last) {
+		if !closed.Add(last) {
 			continue
 		}
 
