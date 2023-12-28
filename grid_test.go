@@ -233,7 +233,7 @@ func TestMapPath(t *testing.T) {
 		src    = image.Pt(1, 1)
 		dst    = image.Pt(3, 2)
 		dirs   = Points(DirectionsCardinal...)
-		walls  = make(set.Set[image.Point])
+		walls  = make(set.Unordered[image.Point])
 		coster = func(p image.Point, d float64, _ struct{}) (cost float64, walkable bool) {
 			return d, !walls.Has(p)
 		}
@@ -357,8 +357,8 @@ func TestMapLOS(t *testing.T) {
 
 	var (
 		src    = image.Pt(1, 1)
-		walls  = make(set.Set[image.Point])
-		seen   = make(set.Set[image.Point])
+		walls  = make(set.Unordered[image.Point])
+		seen   = make(set.Unordered[image.Point])
 		caster = func(p image.Point, _ float64, _ struct{}) (walkable bool) {
 			if walls.Has(p) {
 				return false
@@ -386,7 +386,7 @@ func TestMapLOS(t *testing.T) {
 		t.Fail()
 	}
 
-	seen = make(set.Set[image.Point])
+	seen = make(set.Unordered[image.Point])
 
 	m.LineOfSight(image.Pt(10, 10), 6.0, caster)
 
@@ -405,7 +405,7 @@ func TestMapRayOOB(t *testing.T) {
 	)
 
 	var (
-		seen   = make(set.Set[image.Point])
+		seen   = make(set.Unordered[image.Point])
 		caster = func(p image.Point, _ float64, _ struct{}) (walkable bool) {
 			seen.Add(p)
 
@@ -439,8 +439,8 @@ func TestMapShadow(t *testing.T) {
 
 	var (
 		src    = image.Pt(1, 1)
-		walls  = make(set.Set[image.Point])
-		seen   = make(set.Set[image.Point])
+		walls  = make(set.Unordered[image.Point])
+		seen   = make(set.Unordered[image.Point])
 		caster = func(p image.Point, _ float64, _ struct{}) (walkable bool) {
 			if walls.Has(p) {
 				return false
@@ -486,7 +486,7 @@ func TestMapDijkstra(t *testing.T) {
 
 	var (
 		src     = image.Pt(2, 1)
-		walls   = make(set.Set[image.Point])
+		walls   = make(set.Unordered[image.Point])
 		targets = []image.Point{image.Pt(2, 4)}
 		dirs    = Points(DirectionsCardinal...)
 	)
@@ -593,7 +593,7 @@ func TestLineBresenham(t *testing.T) {
 	m := New[struct{}](image.Rect(0, 0, W, H))
 
 	for i, c := range cases {
-		seen := make(set.Set[image.Point])
+		seen := make(set.Unordered[image.Point])
 
 		m.LineBresenham(c.Src, c.Dst, func(p image.Point, _ struct{}) (ok bool) {
 			seen.Add(p)
