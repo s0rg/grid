@@ -172,23 +172,23 @@ func TestMapNeighbours(t *testing.T) {
 	t.Parallel()
 
 	const (
-		W, H          = 5, 5
-		min, mid, max = 0, 2, 4
+		W, H             = 5, 5
+		minV, midV, maxV = 0, 2, 4
 	)
 
 	var cases = []struct {
 		Point image.Point
 		Count int
 	}{
-		{Point: image.Pt(min, min), Count: 2},
-		{Point: image.Pt(mid, min), Count: 3},
-		{Point: image.Pt(max, min), Count: 2},
-		{Point: image.Pt(max, mid), Count: 3},
-		{Point: image.Pt(max, max), Count: 2},
-		{Point: image.Pt(mid, max), Count: 3},
-		{Point: image.Pt(min, max), Count: 2},
-		{Point: image.Pt(min, mid), Count: 3},
-		{Point: image.Pt(mid, mid), Count: 4},
+		{Point: image.Pt(minV, minV), Count: 2},
+		{Point: image.Pt(midV, minV), Count: 3},
+		{Point: image.Pt(maxV, minV), Count: 2},
+		{Point: image.Pt(maxV, midV), Count: 3},
+		{Point: image.Pt(maxV, maxV), Count: 2},
+		{Point: image.Pt(midV, maxV), Count: 3},
+		{Point: image.Pt(minV, maxV), Count: 2},
+		{Point: image.Pt(minV, midV), Count: 3},
+		{Point: image.Pt(midV, midV), Count: 4},
 	}
 
 	m := New[struct{}](image.Rect(0, 0, W, H))
@@ -535,7 +535,7 @@ func TestMapDijkstraEmpty(t *testing.T) {
 
 	m := New[struct{}](image.Rect(0, 0, W, H))
 
-	d := m.DijkstraMap([]image.Point{}, func(p image.Point, _ struct{}) (ok bool) {
+	d := m.DijkstraMap([]image.Point{}, func(_ image.Point, _ struct{}) (ok bool) {
 		return false
 	})
 
