@@ -1,12 +1,12 @@
 github.com/s0rg/array2d v1.1.1 h1:fPZDbolqx9P0gCaD9yFTZT0TcWa6o/gK4t0YnGRpp/0=
 github.com/s0rg/array2d v1.1.1/go.mod h1:XUVXpxRB1bSnngbrTAyfEcLl6GP+8OpyFLEkwvQOukI=
-github.com/s0rg/set v1.2.0 h1:53b207YMktNQJXYei/oHuTR5oOO2e9+eieZOncYsh9g=
-github.com/s0rg/set v1.2.0/go.mod h1:xz3nDbjF4nyMLvAHvmE7rigXpNrKKTsi6iANznIB1/4=
+github.com/s0rg/set v1.2.1 h1:OMm/sxnO0tIqINEFdr7RbvMWLEFrdleNOuoEQNMTnGk=
+github.com/s0rg/set v1.2.1/go.mod h1:/7U/8G00WOM4Nhlww3hXj7Q96Pw+bFinc17N5sh0l8E=
 github.com/s0rg/vec2d v1.2.0 h1:ilCq4dWAZtPy+VFmyc4mUIxonXCeXxFDwE0o5Y48V5U=
 github.com/s0rg/vec2d v1.2.0/go.mod h1:+V8qlJQahzxDQ2gRs6b6JWBePp3z48CHYc5qO6Ciik8=
 github.com/segmentio/fasthash v1.0.3 h1:EI9+KE1EwvMLBWwjpRDc+fEM+prwxDYbslddQGtrmhM=
 github.com/segmentio/fasthash v1.0.3/go.mod h1:waKX8l2N8yckOgmSsXJi7x1ZfdKZ4x7KRMzBtS3oedY=
 github.com/zyedidia/generic v1.2.1 h1:Zv5KS/N2m0XZZiuLS82qheRG4X1o5gsWreGb0hR7XDc=
 github.com/zyedidia/generic v1.2.1/go.mod h1:ly2RBz4mnz1yeuVbQA/VFwGjK3mnHGRj1JuoG336Bis=
-golang.org/x/exp v0.0.0-20231226003508-02704c960a9b h1:kLiC65FbiHWFAOu+lxwNPujcsl8VYyTYYEZnsOO1WK4=
-golang.org/x/exp v0.0.0-20231226003508-02704c960a9b/go.mod h1:iRJReGqOEeBhDZGkGbynYwcHlctCvnjTYIamk7uXpHI=
+golang.org/x/exp v0.0.0-20240909161429-701f63a606c0 h1:e66Fs6Z+fZTbFBAxKfP3PALWBtpfqks2bwGcexMxgtk=
+golang.org/x/exp v0.0.0-20240909161429-701f63a606c0/go.mod h1:2TbTHSBQa924w8M6Xs1QcRcFwyucIwBGpK1p2f1YFFY=
