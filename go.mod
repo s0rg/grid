@@ -13,5 +13,5 @@ require (
 
 require (
 	github.com/segmentio/fasthash v1.0.3 // indirect
-	golang.org/x/exp v0.0.0-20240909161429-701f63a606c0 // indirect
+	golang.org/x/exp v0.0.0-20241217172543-b2144cdd0a67 // indirect
 )
