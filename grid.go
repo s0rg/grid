@@ -294,7 +294,7 @@ func (m *Map[T]) DijkstraMap(
 	return rv
 }
 
-// Line by Bresenham's algorithm.
+// LineBresenham is line by Bresenham's algorithm.
 func (m *Map[T]) LineBresenham(
 	src, dst image.Point,
 	iter Iter[T],

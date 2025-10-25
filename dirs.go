@@ -13,14 +13,17 @@ const (
 	NorthEast
 	SouthEast
 	SouthWest
-	Up        = North
-	Right     = East
-	Down      = South
-	Left      = West
-	UpLeft    = NorthWest
-	UpRight   = NorthEast
-	DownRight = SouthEast
-	DownLeft  = SouthWest
+)
+
+const (
+	Up        dir = North
+	Right         = East
+	Down          = South
+	Left          = West
+	UpLeft        = NorthWest
+	UpRight       = NorthEast
+	DownRight     = SouthEast
+	DownLeft      = SouthWest
 )
 
 var coords = []image.Point{
