@@ -1,8 +1,6 @@
 module github.com/s0rg/grid
 
-go 1.24
-
-toolchain go1.24.2
+go 1.25
 
 require (
 	github.com/s0rg/array2d v1.1.2
@@ -13,5 +11,5 @@ require (
 
 require (
 	github.com/segmentio/fasthash v1.0.3 // indirect
-	golang.org/x/exp v0.0.0-20250408133849-7e4ce0ab07d0 // indirect
+	golang.org/x/exp v0.0.0-20251023183803-a4bb9ffd2546 // indirect
 )
